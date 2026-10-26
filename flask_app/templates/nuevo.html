@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VoluntaMe</title>
+</head>
+<body>
+    <h1>Nueva Mision</h1>
+
+    <a href="/dashboard">Inicio</a>
+    <a href="/cerrar_sesion">Cerrar sesión</a>
+
+    {% with mensajes = get_flashed_messages(category_filter=['viaje']) %}
+    {% for mensaje in mensajes %}
+        <p>{{ mensaje }}</p>
+    {% endfor %}
+    {% endwith %}
+
+    <form action="/crear_mision" method="POST">
+    <p>Nombre:<input type="text" name="nombre" required></p>
+    <p>Fecha:<input type="date" name="fecha" required></p>
+    <p>Voluntarios Necesarios:<input type="date" name="fecha_termino" required></p>
+    <p>Descripcion:<textarea name="descripcion" rows="4" cols="50"maxlength="40" required></textarea></p>
+    <button type="submit">Guardar</button>
+    </form>    
+</body>
+</html>
