@@ -1,0 +1,29 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Información de la Misión</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='ver_viaje.css') }}">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/dashboard">Inicio</a>
+            <a href="/cerrar_sesion">Cerrar sesión</a>
+        </nav>
+    </header>
+    <main>
+        <div>
+            <h2>{{ mision.nombre }}</h2>
+            <p><strong>Líder:</strong> {{ mision.nombre_usuario }} {{ mision.apellido_usuario }}</p>
+            <p><strong>Fecha:</strong> {{ mision.fecha.strftime('%d-%m-%Y') if mision.fecha else 'Sin fecha' }}</p>
+            <p><strong>Voluntarios necesarios:</strong> {{ mision.voluntarios }}</p>
+        </div>
+        <strong>Descripción:</strong>
+        <p>{{ mision.descripcion }}</p>
+    </main>
+</body>
+</html>

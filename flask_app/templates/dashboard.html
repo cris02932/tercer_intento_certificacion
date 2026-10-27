@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,37 +8,43 @@
 </head>
 <body>
     <header>
-    <h1>Bienvenid@, {{ session['nombre'] }}</h1>
-    <a href="{{ url_for('nueva_mision') }}">Nueva Mision</a>
-    <a href="{{ url_for('cerrar_sesion') }}">Cerrar sesión</a>
+        <h1>Bienvenid@, {{ session['nombre'] }}</h1>
+        <a href="{{ url_for('nueva_mision') }}">Nueva Misión</a>
+        <a href="{{ url_for('cerrar_sesion') }}">Cerrar sesión</a>
     </header>
+
     <main>
         <table border="2">
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Lider</th>
-                <th>Fecha</th>
-                <th>Volunt. Necesarios</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for elemento in todos_los_viajes %}
-            <tr>
-                <td> <a href="{{ url_for('ver_viaje', id=elemento.id) }}">{{ elemento.destino }}</a> </td>
-                <td>{{ elemento.nombre }} {{ elemento.apellido }}</td>
-                <td>{{ elemento.fecha_inicio }}</td>
-                <td>{{ elemento.fecha_termino }}</td>
-                <td>
-                    <a href="{{ url_for('ver_viaje', id=elemento.id) }}">Ver</a>
-                    <a href="{{ url_for('editar_viaje', id=elemento.id) }}">Editar</a>
-                    <a href="{{ url_for('eliminar_viaje', id=elemento.id) }}">Borrar</a>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Líder</th>
+                    <th>Fecha</th>
+                    <th>Volunt. necesarios</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for elemento in todas_las_misiones %}
+                <tr>
+                    <td>{{ elemento.nombre }}</td>
+                    <td>{{ elemento.nombre_usuario }} {{ elemento.apellido_usuario }}</td>
+                    <td>{{ elemento.fecha }}</td>
+                    <td>{{ elemento.voluntarios }}</td>
+                    <td>
+                        <a href="{{ url_for('ver_mision', id=elemento.id) }}">Ver</a>
+                        {% if elemento.usuario_id == session['usuario_id'] %}
+                            <a href="{{ url_for('editar_mision', id=elemento.id) }}">Editar</a>
+                            <form action="{{ url_for('eliminar_mision', id=elemento.id) }}" method="POST" style="display:inline;">
+                            <button type="submit" class="boton-borrar">Borrar</button>
+                            </form>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </main>
 </body>
 </html>

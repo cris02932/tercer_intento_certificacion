@@ -1,20 +1,27 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VoluntaMe</title>
 </head>
 <body>
-    <h1>Editar Mision</h1>
+    <h1>Editar Misión</h1>
     <a href="/dashboard">Inicio</a>
     <a href="/cerrar_sesion">Cerrar sesión</a>
-    <form action="/actualizar_viaje/{{ viaje.id }}" method="POST">
+
+    {% with mensajes = get_flashed_messages(category_filter=['mision']) %}
+        {% for mensaje in mensajes %}
+            <p>{{ mensaje }}</p>
+        {% endfor %}
+    {% endwith %}
+    <form action="/actualizar_mision/{{ mision.id }}" method="POST">
         <p>Nombre:<input type="text" name="nombre" value="{{ mision.nombre }}" required></p>
-        <p>Fecha:<input type="date" name="fecha"value="{{ mision.fecha.strftime('%Y-%m-%d') if viaje.fecha_inicio else '' }}" required></p>
-        <p>Voluntarios Necesarios:<input type="date" name="voluntarios_necesarios"value="{{ mision.voluntarios_necesariosstrftime('%Y-%m-%d') if mision.voluntarios_necesarios else '' }}" required></p>
-        <p>Itinerario:<textarea name="itinerario" maxlength="40" required>{{ viaje.itinerario }}</textarea></p>
+        <p>Fecha:<input type="date" name="fecha" value="{{ mision.fecha.strftime('%Y-%m-%d') if mision.fecha else '' }}" required></p>
+        <p>Voluntarios Necesarios:<input type="number" name="voluntarios" min="2" max="20" value="{{ mision.voluntarios }}" required></p>
+        <p>Descripción:<textarea name="descripcion" rows="4" cols="50" required>{{ mision.descripcion }}</textarea></p>
         <button type="submit">Guardar</button>
-    </form>    
+    </form>
 </body>
 </html>

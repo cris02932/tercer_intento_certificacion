@@ -5,7 +5,9 @@ from flask import flash
 
 # Objeto de expresión regular que usaremos para validar
 
-EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+.[a-zA-Z]+$')
+
+EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]{2,}$')
+
 
 
 class Usuario:
@@ -80,27 +82,37 @@ class Usuario:
 
 
     #Usamos metodo estatico para validar los formularios
+    
     @staticmethod
     def validar_registro(formulario):
         es_valido = True
 
-        if len(formulario['nombre']) < 2:
+        nombre = formulario.get('nombre', '').strip()
+        apellido = formulario.get('apellido', '').strip()
+        email = formulario.get('email', '').strip()
+        password = formulario.get('password', '')
+        password_conf = formulario.get('password_conf', '')
+
+        if len(nombre) < 2:
             flash("El nombre debe tener al menos 2 caracteres", "registro")
             es_valido = False
 
-        if len(formulario['apellido']) < 2:
+        if len(apellido) < 2:
             flash("El apellido debe tener al menos 2 caracteres", "registro")
             es_valido = False
 
-        if not EMAIL_REGEX.match(formulario['email']):
+        if not EMAIL_REGEX.match(email):
             flash("El email no tiene un formato válido", "registro")
             es_valido = False
-        elif Usuario.get_by_email({'email': formulario['email']}):
-            print(Usuario.get_by_email({'email': formulario['email']}))
+        elif Usuario.get_by_email({'email': email}):
             flash("Ya existe una cuenta con ese email", "registro")
             es_valido = False
 
-        if formulario['password'] != formulario['password_conf']:
+        if len(password) < 8:
+            flash("La contraseña debe tener al menos 8 caracteres", "registro")
+            es_valido = False
+
+        if password != password_conf:
             flash("Las contraseñas no coinciden", "registro")
             es_valido = False
 

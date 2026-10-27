@@ -1,28 +1,35 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VoluntaMe</title>
 </head>
 <body>
-    <h1>Nueva Mision</h1>
+    <h1>Nueva Misión</h1>
 
     <a href="/dashboard">Inicio</a>
     <a href="/cerrar_sesion">Cerrar sesión</a>
-
-    {% with mensajes = get_flashed_messages(category_filter=['viaje']) %}
-    {% for mensaje in mensajes %}
-        <p>{{ mensaje }}</p>
-    {% endfor %}
+    {% with mensajes = get_flashed_messages(category_filter=['mision']) %}
+        {% for mensaje in mensajes %}
+            <p>{{ mensaje }}</p>
+        {% endfor %}
     {% endwith %}
-
     <form action="/crear_mision" method="POST">
-    <p>Nombre:<input type="text" name="nombre" required></p>
-    <p>Fecha:<input type="date" name="fecha" required></p>
-    <p>Voluntarios Necesarios:<input type="date" name="fecha_termino" required></p>
-    <p>Descripcion:<textarea name="descripcion" rows="4" cols="50"maxlength="40" required></textarea></p>
-    <button type="submit">Guardar</button>
-    </form>    
+        <p>Nombre:
+        <input type="text" name="nombre" required>
+        </p>
+        <p>Fecha:
+        <input type="date" name="fecha" required>
+        </p>
+        <p>Voluntarios Necesarios:
+        <input type="number" name="voluntarios" min="2" max="20" required>
+        </p>
+        <p>Descripción:
+        <textarea name="descripcion" rows="4" cols="50" maxlength="40" required></textarea>
+        </p>
+        <button type="submit">Guardar</button>
+    </form>
 </body>
 </html>

@@ -15,8 +15,8 @@ def inicio():
 def dashboard():
     if 'usuario_id' not in session:
         return redirect('/')
-    viajes = Viaje.get_all()
-    return render_template('dashboard.html',todos_los_viajes=viajes)
+    misiones = Mision.get_all()
+    return render_template('dashboard.html', todas_las_misiones=misiones)
 
 
 #registro crear usuario
@@ -33,7 +33,6 @@ def crear_usuario():
     #--- SEAN VALIDOS
 
     if not Usuario.validar_registro(request.form):
-        print("Usuario Invalido")
         return redirect('/')
 
     #--- VALIDACIONES ---
@@ -60,20 +59,25 @@ def crear_usuario():
 
 
 
+
 #inicio sesión 
 @app.route('/iniciar_sesion', methods=['POST'])
 def iniciar_sesion():
     #buscamos al usuario por su email
-    usuario = Usuario.get_by_email({'email': request.form['email_inicio_sesion']})
+    email = request.form.get('email_inicio_sesion', '').strip()
+    password = request.form.get('password_inicio_sesion', '')
+
+    usuario = Usuario.get_by_email({'email': email})
 
     #si no existe o la contraseña no coincide, mostramos el mismo mensaje
-    if not usuario or not bcrypt.check_password_hash(usuario.password, request.form['password_inicio_sesion']):
+    if not usuario or not bcrypt.check_password_hash(usuario.password, password):
         flash("E-mail o contraseña incorrectos", "inicio_sesion")
         return redirect('/')
 
     session['usuario_id'] = usuario.id
     session['nombre'] = usuario.nombre
     return redirect('/dashboard')
+
 
 
 #cerrar sesión
