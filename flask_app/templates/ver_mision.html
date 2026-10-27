@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -6,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Información de la Misión</title>
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='ver_viaje.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='ver_mision.css') }}">
 </head>
 <body>
     <header>
@@ -16,14 +15,16 @@
         </nav>
     </header>
     <main>
-        <div>
+        <div class="mision">
             <h2>{{ mision.nombre }}</h2>
             <p><strong>Líder:</strong> {{ mision.nombre_usuario }} {{ mision.apellido_usuario }}</p>
-            <p><strong>Fecha:</strong> {{ mision.fecha.strftime('%d-%m-%Y') if mision.fecha else 'Sin fecha' }}</p>
+            <p><strong>Fecha:</strong>
+            {{ mision.fecha.strftime('%d-%m-%Y') if mision.fecha else 'Sin fecha' }}
+            </p>
             <p><strong>Voluntarios necesarios:</strong> {{ mision.voluntarios }}</p>
+            <p><strong>Descripción:</strong></p>
+            <p>{{ mision.descripcion }}</p>
         </div>
-        <strong>Descripción:</strong>
-        <p>{{ mision.descripcion }}</p>
     </main>
 </body>
 </html>
